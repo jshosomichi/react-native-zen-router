@@ -1,0 +1,28 @@
+{
+  "name": "react-native-zen-router",
+  "version": "0.1.0",
+  "description": "Router for React Native with simple concept.",
+  "main": "react-native-zen-router.js",
+  "dependencies": {
+    "@types/fbemitter": "^2.0.32",
+    "@types/lodash.isnil": "^4.0.4",
+    "fbemitter": "^2.1.1",
+    "guid-typescript": "^1.0.9",
+    "lodash.isnil": "^4.0.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^16.4.14",
+    "@types/react-native": "^0.56.24",
+    "typescript": "^3.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jshosomichi/react-native-zen-router"
+  }
+}
