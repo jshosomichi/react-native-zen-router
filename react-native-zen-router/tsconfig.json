@@ -1,0 +1,21 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "jsx": "react-native",
+    "lib": [
+      "ES2017"
+    ],
+    "outDir": "dist",
+    "rootDir": "src",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
+}

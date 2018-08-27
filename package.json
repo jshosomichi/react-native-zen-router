@@ -1,0 +1,24 @@
+{
+  "name": "react-native-zen-router-dev",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "npx tslint --project react-native-zen-router",
+    "lint-example": "npx tslint --project example",
+    "code-sync": "cd react-native-zen-router && npx tsc && cd ../example && yarn upgrade reac-native-zen-router && tsc",
+    "create-api-docs": "rm -rf docs && npx typedoc && cp -r images docs/images && cp images/favicon.ico docs",
+    "start-doc-server": "npx ws --directory docs/api",
+    "open-brower": "npx opener http://localhost:8000"
+  },
+  "description": "This is a temporary package for making it public",
+  "main": "react-native-zen-router/react-native-zen-router.js",
+  "author": "seki",
+  "license": "MIT",
+  "devDependencies": {
+    "tslint": "^5.12.1",
+    "typedoc": "^0.13.0"
+  },
+  "dependencies": {
+    "local-web-server": "^2.6.0",
+    "opener": "^1.5.1"
+  }
+}
