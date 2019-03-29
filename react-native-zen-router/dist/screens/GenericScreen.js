@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
+import { Animated, Dimensions, StyleSheet } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 /** 特有の機能を持たないスクリーン。1つのReactコンポーネントで画面全体を構成する。 */
 export class GenericScreen extends React.Component {
     /** @ignore */
@@ -35,10 +34,9 @@ export const createGenericScreen = (params) => {
 };
 const styles = StyleSheet.create({
     screenContainer: {
-        flex: 1,
         position: 'absolute',
         width: windowWidth,
-        height: windowHeight - (!_.isNil(StatusBar.currentHeight) ? StatusBar.currentHeight : 0),
+        height: '100%',
         backgroundColor: '#fff'
     }
 });

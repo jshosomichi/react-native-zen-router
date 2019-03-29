@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import {Animated, Dimensions, StatusBar, StyleSheet} from 'react-native';
+import {Animated, Dimensions, StyleSheet} from 'react-native';
 import {Content, ScreenBaseProps, Screen, ScreenAttributes} from '../Router';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 /** @ignore */
 export type GenericScreenProps = ScreenBaseProps & CreateGenericScreenParams & { screenAttributes: ScreenAttributes };
@@ -67,10 +66,9 @@ export const createGenericScreen = (params: CreateGenericScreenParams): Screen =
 
 const styles = StyleSheet.create({
   screenContainer: {
-    flex: 1,
     position: 'absolute',
     width: windowWidth,
-    height: windowHeight - (!_.isNil(StatusBar.currentHeight) ? StatusBar.currentHeight : 0),
+    height: '100%',
     backgroundColor: '#fff'
   }
 });

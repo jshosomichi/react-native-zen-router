@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Animated, Dimensions, StatusBar, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import { TabScreenSwipableResponder } from '../responders/SwipebaleResponder';
 import { EventEmitter } from 'fbemitter';
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 /** @ignore */
 export var SwipeDirection;
 (function (SwipeDirection) {
@@ -159,7 +158,7 @@ const swipedContentsX = (state) => ({
 const createStyles = (isSwiping, negativeMarginBottomOfContent, footerTabLayout) => StyleSheet.create({
     tabScreenContainer: {
         position: 'absolute',
-        height: windowHeight - (!_.isNil(StatusBar.currentHeight) ? StatusBar.currentHeight : 0),
+        height: '100%',
     },
     contentsContainer: {
         flexDirection: 'row',
