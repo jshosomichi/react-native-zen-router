@@ -63,8 +63,10 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="react-native-zen-router">React Native Zen Router</h1>
-				<p>最小限の概念、最小限のインターフェースを提供し、軽量でシンプルに扱えることを目指したルータです。
-				一切の表示領域は提供せず、ルーティングのために最低限必要な枠組みのみを提供します。</p>
+				<p>Router for React Native with simple concept.
+				(I still cannot prepare README in English now. I&#39;m working on it.)</p>
+				<p>React Native上で動作し、最小限の概念、最小限のインターフェースを提供、軽量でシンプルに扱えることを目指したルータです。
+				表示領域は提供せず、ルーティングのために最低限必要な枠組みのみを提供することを優先しています。</p>
 				<h1 id="concepts">Concepts</h1>
 				<p>登場する主な概念は積み上げ表示されるScreenと、Screenの内容であるContentの２つです。</p>
 				<hr>
@@ -79,52 +81,86 @@
 				<hr>
 				<p>Routerはスタック構造のScreen群を持つことになります。スクリーン名を指定してpushすることで新しいScreenが積み上げられます。新しいScreenの表示や非表示は縦方向/横方向のアニメーションを都度指定することが出来ます。
 				<img src="images/zen-router3.png" alt=""></p>
+				<h1 id="technical-note">Technical Note</h1>
+				<ul>
+					<li>TypeScriptの型定義を内包しています。FlowTypeの型定義は現在対応していません。</li>
+				</ul>
 				<h1 id="installation">Installation</h1>
-				<h1 id="getting-started">Getting Started</h1>
-				<pre><code class="language-typescript"><span class="hljs-comment">// ルートオブジェクトを準備します。</span>
-<span class="hljs-comment">// 下記の"ScreenA","ScreenB"は新しいScreenを生成する時に指定する名前となります。</span>
-<span class="hljs-comment">// ScreenAやScreenBのインスタンスが実際に画面に表示されるScreenです。</span>
-<span class="hljs-keyword">const</span> routes: Routes = {
-  ScreenA: {
-      screen: createGenericScreen({content: ContentX})
-  },
-  ScreenB: {
-    screen: createTabScreen({
-      tabType: <span class="hljs-string">'footer'</span>,
-      tabComponent: MainTab,
-      contentComponents: [
-        ContentY,
-        ContentZ
-      ],
-      swipable: <span class="hljs-literal">true</span> 
-    })
-  }
-};
+				<pre><code><span class="hljs-built_in">npm</span> install --save react-<span class="hljs-keyword">native</span>-zen-router</code></pre><h1 id="getting-started">Getting Started</h1>
+				<p><code>`</code>typescript jsx
+				import {createGenericScreen, createTabScreen, Router} from &#39;react-native-zen-router&#39;;</p>
+				<p>// ルートオブジェクトを準備します。
+					// 下記の&quot;ScreenA&quot;,&quot;ScreenB&quot;は新しいScreenを生成する時に指定する名前となります。
+					// ScreenAやScreenBのインスタンスが実際に画面に表示されるScreenです。
+					const routes: Routes = {
+					ScreenA: {
+					screen: createGenericScreen({content: ContentX})
+					},
+					ScreenB: {
+					screen: createTabScreen({
+					tabType: &#39;footer&#39;,
+					tabComponent: FooterTab,
+					contentComponents: [
+					ContentY,
+					ContentZ
+					],
+					swipable: true
+					})
+					}
+				};</p>
+				<p>// ルーティング設定
+					const config = {
+					initialRouteName: &#39;ScreenA&#39;
+				};</p>
+				<p>// ScreenPropsは各Contentで受け取ることができるオブジェクトです
+				const screenProps = {user, items, cart};</p>
+				<p>export default class App extends React.Component {
+					render() {
+					return (
+					<Router
+					routes={routes}
+					config={config}
+					screenProps={screenProps}/>);
+					}
+				}</p>
+				<pre><code>
+# <span class="hljs-type">Redux</span> <span class="hljs-type">Integration</span>
+<span class="hljs-keyword">with</span> [react-redux](https:<span class="hljs-comment">//github.com/reduxjs/react-redux)</span>
 
-<span class="hljs-comment">// ルーティング設定</span>
-<span class="hljs-keyword">const</span> config = {
-  initialRouteName: <span class="hljs-string">'ScreenA'</span>
-};
+<span class="hljs-type">Let</span><span class="hljs-symbol">'s</span> give your own `reducer`, `mapStateToProps`, and `mapDispatchToProp` like below. 
 
-<span class="hljs-comment">// ScreenPropsは各Contentで受け取ることができるオブジェクトです</span>
-<span class="hljs-keyword">const</span> screenProps = {user, items, cart};
+```typescript jsx
+const store = createStore(reducer);
+const <span class="hljs-type">AppWithState</span> = (props) =&gt;
+  &lt;<span class="hljs-type">Router</span>
+    routes={routes}
+    config={config}
+    screenProps={props}/&gt;;
+const <span class="hljs-type">Connected</span> = connect(mapStateToProps, mapDispatchToProp)(<span class="hljs-type">AppWithState</span>);    
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">class</span> App <span class="hljs-keyword">extends</span> React.Component {
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   render() {
     <span class="hljs-keyword">return</span> (
-      &lt;Router
-        routes={routes}
-        config={config}
-        screenProps={screenProps}/&gt;);
+      &lt;<span class="hljs-type">Provider</span> store={store}&gt;
+        &lt;<span class="hljs-type">Connected</span> /&gt;
+      &lt;/<span class="hljs-type">Provider</span>&gt;
+    );
   }
-}</code></pre>
-				<h1 id="api-reference">API Reference</h1>
+}</code></pre><h1 id="api-reference">API Reference</h1>
 				<p><a href="https://jshosomichi.github.io/react-native-zen-router/">https://jshosomichi.github.io/react-native-zen-router/</a> </p>
-				<h1 id="contribute">Contribute</h1>
-				<h1 id="credits">Credits</h1>
-				<h1 id="license">License</h1>
+				<h1 id="execution-example-app">Execution Example App</h1>
+				<pre><code><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> react-native-zen-router/</span>
+<span class="hljs-meta">$</span><span class="bash"> yarn install</span>
+<span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> ../example/</span>
+<span class="hljs-meta">$</span><span class="bash"> yarn install</span>
+<span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> ..</span>
+<span class="hljs-meta">$</span><span class="bash"> npm run code-sync</span>
+<span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">cd</span> example/</span>
+<span class="hljs-meta">$</span><span class="bash"> react-native run-ios</span></code></pre><h1 id="license">License</h1>
 				<p>MIT</p>
-				<p>MIT @ <a href="jshosomichi@gmail.com">jshosomichi</a></p>
+				<h1 id="how-to-contribute">How To Contribute</h1>
+				<p>It&#39;s not ready yet.</p>
+				<p>MIT @ <a href="mailto:&#106;&#x73;&#104;&#111;&#x73;&#111;&#x6d;&#105;&#x63;&#104;&#105;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#106;&#x73;&#104;&#111;&#x73;&#111;&#x6d;&#105;&#x63;&#104;&#105;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -186,52 +222,19 @@
 						<a href="globals.html#transitionstate" class="tsd-kind-icon">Transition<wbr>State</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#styles" class="tsd-kind-icon">styles</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#transitionduration" class="tsd-kind-icon">transition<wbr>Duration</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#windowheight" class="tsd-kind-icon">window<wbr>Height</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#windowwidth" class="tsd-kind-icon">window<wbr>Width</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#creategenericscreen" class="tsd-kind-icon">create<wbr>Generic<wbr>Screen</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#createstyles" class="tsd-kind-icon">create<wbr>Styles</a>
-					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#createtabscreen" class="tsd-kind-icon">create<wbr>Tab<wbr>Screen</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#ishorizontalgesture" class="tsd-kind-icon">is<wbr>Horizontal<wbr>Gesture</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#ismovingnext" class="tsd-kind-icon">is<wbr>Moving<wbr>Next</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#ismovingprev" class="tsd-kind-icon">is<wbr>Moving<wbr>Prev</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#onpanresponderend" class="tsd-kind-icon">on<wbr>Pan<wbr>Responder<wbr>End</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#routefromname" class="tsd-kind-icon">route<wbr>From<wbr>Name</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#shouldacceptswipegesture" class="tsd-kind-icon">should<wbr>Accept<wbr>Swipe<wbr>Gesture</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#shouldrendercontent" class="tsd-kind-icon">should<wbr>Render<wbr>Content</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#swipedcontentsx" class="tsd-kind-icon">swiped<wbr>ContentsX</a>
-					</li>
-					<li class=" tsd-kind-object-literal tsd-is-not-exported">
-						<a href="globals.html#stack" class="tsd-kind-icon">Stack</a>
 					</li>
 				</ul>
 			</nav>

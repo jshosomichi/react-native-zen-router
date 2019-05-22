@@ -6,7 +6,7 @@
     "lint-example": "npx tslint --project example",
     "code-sync": "cd react-native-zen-router && npx tsc && cd ../example && yarn upgrade reac-native-zen-router && tsc",
     "create-api-docs": "rm -rf docs && npx typedoc && cp -r images docs/images && cp images/favicon.ico docs",
-    "start-doc-server": "npx ws --directory docs/api",
+    "start-doc-server": "npx ws --directory docs",
     "open-brower": "npx opener http://localhost:8000"
   },
   "description": "This is a temporary package for making it public",

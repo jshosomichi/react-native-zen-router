@@ -1,6 +1,6 @@
 module.exports = {
   src: './react-native-zen-router/src',
-  out: './docs/',
+  out: './docs',
   name: 'react-native-zen-router',
   mode: 'file',
   module: 'commonjs',
