@@ -1,4 +1,4 @@
-import {FlatList, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import * as React from 'react';
 import {ContentProps} from 'react-native-zen-router';
 
@@ -8,18 +8,12 @@ interface Item {
 }
 
 export class TopScreen extends React.Component<ContentProps> {
-  LinkItem = ({item}: { item: Item }) => {
-    return (
-      <TouchableOpacity style={styles.linkItemContainer} onPress={item.callback}>
-        <View style={styles.linkDescription}>
-          <Text style={styles.linkDescriptionText}>{item.description}</Text>
-        </View>
-        <View style={styles.linkArrow}>
-          <Text style={styles.linkArrowText}>{'→'}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
+  LinkItem = ({item}: { item: Item }) => (
+    <TouchableOpacity style={styles.linkItemContainer} onPress={item.callback}>
+      <View style={styles.linkDescription}><Text>{item.description}</Text></View>
+      <View style={styles.linkArrow}><Text style={{fontSize: 20}}>{'→'}</Text></View>
+    </TouchableOpacity>
+  )
 
   render() {
     const routes: Item[] = [
@@ -43,6 +37,7 @@ export class TopScreen extends React.Component<ContentProps> {
           {'React Native Zen Router Example'}
         </Text>
         <FlatList
+          keyExtractor={(item, index) => String(index)}
           style={styles.linkListContainer}
           data={routes}
           renderItem={this.LinkItem}
@@ -63,37 +58,26 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#4c4c4c',
-    fontSize: Platform.select({ios: 26, android: 21}),
-    fontFamily: Platform.select({ios: 'BodoniSvtyTwoOSITCTT-Book', android: 'serif'}),
+    fontSize: 22
   },
   linkListContainer: {
-    marginTop: 30
+    marginTop: 20
   },
   linkItemContainer: {
     flex: 1,
     flexDirection: 'row',
-    height: 56,
+    height: 40,
     borderBottomWidth: 0.5,
     borderBottomColor: '#808080',
+    paddingBottom: 4
   },
   linkDescription: {
-    flex: 6,
-    justifyContent: 'flex-end',
-  },
-  linkDescriptionText: {
-    height: 16,
-    bottom: 4,
-    fontSize: Platform.select({ios: 12, android: 14}),
-    fontFamily: Platform.select({ios: 'CourierNewPSMT', android: 'sans-serif-smallcaps'}),
+    flex: 4,
+    justifyContent: 'flex-end'
   },
   linkArrow: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'flex-end'
-  },
-  linkArrowText: {
-    fontSize: Platform.select({ios: 24, android: 26}),
-    fontFamily: Platform.select({ios: 'CourierNewPSMT', android: 'sans-serif-smallcaps'}),
-    bottom: 2,
   }
 });

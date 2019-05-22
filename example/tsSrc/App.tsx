@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {createGenericScreen, createTabScreen, Router, Routes} from 'react-native-zen-router';
+import {SafeAreaView} from 'react-native';
 import {HeaderTab, FooterTab, ContentForTab} from './contents/Tab';
 import {TopScreen} from './contents/Top';
 import {Modal} from './contents/Modal';
@@ -54,9 +55,12 @@ const config = {
 export default class App extends React.Component {
   render() {
     return (
-      <Router
-        routes={routes}
-        config={config}
-        screenProps={{globalValue: 100}}/>);
+      <SafeAreaView style={{flex: 1}}>
+        <Router
+          routes={routes}
+          config={config}
+          screenProps={{globalValue: 100}}/>
+      </SafeAreaView>
+    );
   }
 }

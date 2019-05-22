@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {GenericScreenProps} from 'react-native-zen-router';
 
 export const CloseButton = ({onClose}: { onClose: () => void }) =>
@@ -29,18 +29,15 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    top: 20,
+    top: 8,
     right: 20
   },
   title: {
     textAlign: 'center',
-    fontSize: 24,
-    fontFamily: Platform.select({ios: 'BodoniSvtyTwoOSITCTT-Book', android: 'serif'}),
+    fontSize: 20
   },
   paramText: {
-    marginTop: 20,
     textAlign: 'center',
-    fontFamily: Platform.select({ios: 'CourierNewPSMT', android: 'sans-serif-smallcaps'}),
   },
 });
 
