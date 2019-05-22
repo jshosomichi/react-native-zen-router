@@ -32,6 +32,7 @@ export const createGenericScreen = (params) => {
         }
     };
 };
+/** @ignore */
 const styles = StyleSheet.create({
     screenContainer: {
         position: 'absolute',

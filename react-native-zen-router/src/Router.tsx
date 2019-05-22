@@ -3,9 +3,12 @@ import * as _ from 'lodash';
 import {Guid} from 'guid-typescript';
 import {StyleSheet, Animated, View, Dimensions, LayoutRectangle} from 'react-native';
 import {TabScreen} from './screens/TabScreen';
-import {animationConfig, updateTransitionDuration} from './common/TransitionAnimationConfig';
+import {animationConfig, updateTransitionDuration} from './commonFunctions/TransitionAnimationConfigCreators';
 
+/** @ignore */
 const windowWidth = Dimensions.get('window').width;
+
+/** @ignore */
 const windowHeight = Dimensions.get('window').height;
 
 /** @ignore */
@@ -88,6 +91,7 @@ export interface RouterState {
   config: RouterConfig;
 }
 
+/** @ignore */
 function routeFromName(routes: Routes, routeName: string): Route {
   if (!routes[routeName]) {
     throw new Error(`routeName "${routeName}" is not found in routes.`);
@@ -96,6 +100,7 @@ function routeFromName(routes: Routes, routeName: string): Route {
   }
 }
 
+/** @ignore */
 const Stack = {
   pop<T>(array: T[]) {
     return array.slice(0, array.length - 1);
@@ -575,6 +580,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
   }
 }
 
+/** @ignore */
 const styles = StyleSheet.create({
   container: {
     flex: 1

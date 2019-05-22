@@ -64,6 +64,7 @@ export const createGenericScreen = (params: CreateGenericScreenParams): Screen =
   };
 };
 
+/** @ignore */
 const styles = StyleSheet.create({
   screenContainer: {
     position: 'absolute',

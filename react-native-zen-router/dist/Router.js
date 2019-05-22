@@ -2,8 +2,10 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { Guid } from 'guid-typescript';
 import { StyleSheet, Animated, View, Dimensions } from 'react-native';
-import { animationConfig, updateTransitionDuration } from './common/TransitionAnimationConfig';
+import { animationConfig, updateTransitionDuration } from './commonFunctions/TransitionAnimationConfigCreators';
+/** @ignore */
 const windowWidth = Dimensions.get('window').width;
+/** @ignore */
 const windowHeight = Dimensions.get('window').height;
 /** @ignore */
 export class ScreenHolder {
@@ -19,6 +21,7 @@ export class ScreenHolder {
         this.tabIndex = tabIndex;
     }
 }
+/** @ignore */
 function routeFromName(routes, routeName) {
     if (!routes[routeName]) {
         throw new Error(`routeName "${routeName}" is not found in routes.`);
@@ -27,6 +30,7 @@ function routeFromName(routes, routeName) {
         return routes[routeName];
     }
 }
+/** @ignore */
 const Stack = {
     pop(array) {
         return array.slice(0, array.length - 1);
@@ -227,6 +231,7 @@ export class Router extends React.Component {
       </View>);
     }
 }
+/** @ignore */
 const styles = StyleSheet.create({
     container: {
         flex: 1
