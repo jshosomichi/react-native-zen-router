@@ -76,8 +76,20 @@ export class TabScreen extends React.Component<TabScreenProps, TabScreenState> {
       ? props.containerComponent
       : (props) => <View style={{flex: 1}}>{props.children}</View>;
 
+    const isChildTabScreen = _.isNil(props.screenHolder);
+
+    // もし、現在のタブが親タブであれば、子タブに渡すためにparamsにchildTabIndexを持たせる
+    if (!isChildTabScreen) {
+      props.screenHolder!.addParams('childTabIndex', props.screenHolder!.payload.childTabIndex);
+    }
+
     this.state = {
-      tabIndex: !_.isNil(props.screenHolder) ? props.screenHolder.tabIndex : 0,
+      // もし、現在のタブが親タブであればScreenHolderの値を使い、子タブであればparamsの値を使う
+      tabIndex: isChildTabScreen
+        ? props.screenAttributes.params.childTabIndex
+        : !_.isNil(props.screenHolder!.payload.tabIndex)
+          ? props.screenHolder!.payload.tabIndex
+          : 0,
       swipeDirection: SwipeDirection.NONE,
       swipeDistance: new Animated.Value(0)
     };
@@ -110,6 +122,10 @@ export class TabScreen extends React.Component<TabScreenProps, TabScreenState> {
   /** @ignore */
   render() {
     const {tabType, tabComponent, contentComponents, router, screenHolder, screenProps, screenAttributes, screenIndex} = this.props;
+
+    if (this.state.tabIndex > contentComponents.length - 1 || this.state.tabIndex < 0) {
+      throw new Error(`tabIndex "${this.state.tabIndex}" is out-of-range in TabScreen.`);
+    }
 
     const footerTabLayout = tabType === 'footer' ? this.state.tabLayout : screenAttributes.tabLayout;
 

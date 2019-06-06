@@ -76,8 +76,14 @@ export class ScreenHolder {
     readonly translateY: Animated.Value,
     readonly params: { [param: string]: any },
     readonly stickTab: boolean,
-    readonly tabIndex: number
-  ) {
+    readonly payload: {
+      tabIndex?: number;
+      childTabIndex?: number;
+    }
+  ) {}
+
+  addParams(key: string, value: any) {
+    this.params[key] = value;
   }
 }
 
@@ -113,8 +119,10 @@ export interface NamedTransitionScreenParams {
   routeName: string;
   /** 遷移先のスクリーンに渡すオブジェクト */
   params?: { [param: string]: any };
-  /** 真であれば、高速で連続タップされた時に複数操作として受け付ける。省略時にはfalseとして扱う。 */
+  /** 遷移先がタブスクリーンの場合、最初に表示するコンテンツのインデックスを設定する。省略時には0として扱う。 */
   tabIndex?: number;
+  /** 遷移先が入れ子タブスクリーンの場合、最初に表示するコンテンツの子側のインデックスを設定する。省略時には0として扱う。 */
+  childTabIndex?: number;
   /** 真であれば、高速で連続タップされた時に複数操作として受け付ける。省略時にはfalse扱いとなる。 */
   allowMultipleTransition?: boolean;
 }
@@ -123,10 +131,12 @@ export interface NamedTransitionScreenParams {
 export interface FlexibleTransitionScreenParams {
   /** 遷移先スクリーンのルート名。空の場合はメソッドが判断を行う。 */
   routeName?: string;
-  /** 遷移先のスクリーンに渡すオブジェクト */
+  /** 遷移元から遷移先のContentに渡すオブジェクト */
   params?: { [param: string]: any };
   /** 遷移先がタブスクリーンの場合、最初に表示するコンテンツのインデックスを設定する。省略時には0として扱う。 */
   tabIndex?: number;
+  /** 遷移先が入れ子タブスクリーンの場合、最初に表示するコンテンツの子側のインデックスを設定する。省略時には0として扱う。 */
+  childTabIndex?: number;
   /** 真であれば、高速で連続タップされた時に複数操作として受け付ける。省略時にはfalseとして扱う。 */
   allowMultipleTransition?: boolean;
 }
@@ -166,7 +176,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
         new Animated.Value(0),
         {},
         false,
-        0
+        {}
       );
 
     this.state = {
@@ -198,7 +208,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
   }
 
   /** 横移動アニメーションと共にスクリーンを追加表示する。 */
-  pushHorizontal({routeName, params, tabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
+  pushHorizontal({routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
 
     if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
       return;
@@ -217,7 +227,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
         translateY,
         !_.isNil(params) ? params : {},
         false,
-        tabIndex,
+        {tabIndex, childTabIndex}
       );
 
     this.setState({
@@ -234,7 +244,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
   }
 
   /** 横移動アニメーションと共にスクリーンを追加表示する。 タブはアニメーションせずに先行表示するので、遷移前スクリーンと遷移後スクリーンが同じタブを使っていると、遷移中にタブをスティッキーに見せることができる。 */
-  pushHorizontalWithStickTab({routeName, params, tabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
+  pushHorizontalWithStickTab({routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
 
     if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
       return;
@@ -253,7 +263,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
         translateY,
         !_.isNil(params) ? params : {},
         true,
-        tabIndex
+        {tabIndex, childTabIndex}
       );
 
     this.setState({
@@ -270,7 +280,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
   }
 
   /** 縦移動アニメーションと共にスクリーンを追加表示する。 */
-  pushVertical({routeName, params, tabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
+  pushVertical({routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
 
     if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
       return;
@@ -289,7 +299,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
         translateY,
         !_.isNil(params) ? params : {},
         false,
-        tabIndex
+        {tabIndex, childTabIndex}
       );
 
     this.setState({
@@ -304,7 +314,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
   }
 
   /** 横移動アニメーションと共にスクリーンを表示し、それまでのスクリーンスタックを破棄し、新しいスクリーンスタックに差し替える */
-  resetWithPushHorizontal({routeName, params, tabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
+  resetWithPushHorizontal({routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
 
     if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
       return;
@@ -327,7 +337,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
           translateY,
           !_.isNil(params) ? params : {},
           false,
-          tabIndex
+          {tabIndex, childTabIndex}
         ) :
         prevBottomScreenHolder;
 
@@ -346,7 +356,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
   }
 
   /** 縦移動アニメーションと共にスクリーンを表示し、それまでのスクリーンスタックを破棄し、新しいスクリーンスタックに差し替える */
-  resetWithPushVertical({routeName, params, tabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
+  resetWithPushVertical({routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
 
     if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
       return;
@@ -369,7 +379,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
           translateY,
           !_.isNil(params) ? params : {},
           false,
-          tabIndex
+          {tabIndex, childTabIndex}
         ) :
         prevBottomScreenHolder;
 
@@ -396,6 +406,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
     }
 
     const tabIndex = !_.isNil(params) && !_.isNil(params.tabIndex) ? params.tabIndex : 0;
+    const childTabIndex = !_.isNil(params) && !_.isNil(params.childTabIndex) ? params.childTabIndex : 0;
     const topScreenHolder = this.state.screenHolders[this.state.screenHolders.length - 1];
     const prevBottomScreenHolder = this.state.screenHolders[0];
 
@@ -410,7 +421,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
           new Animated.Value(0),
           !_.isNil(params) ? params : {},
           false,
-          tabIndex
+          {tabIndex, childTabIndex}
         ) :
         prevBottomScreenHolder;
 
@@ -441,6 +452,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
     }
 
     const tabIndex = !_.isNil(params) && !_.isNil(params.tabIndex) ? params.tabIndex : 0;
+    const childTabIndex = !_.isNil(params) && !_.isNil(params.childTabIndex) ? params.childTabIndex : 0;
     const topScreenHolder = this.state.screenHolders[this.state.screenHolders.length - 1];
     const prevBottomScreenHolder = this.state.screenHolders[0];
 
@@ -455,7 +467,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
           new Animated.Value(0),
           !_.isNil(params) ? params : {},
           false,
-          tabIndex
+          {tabIndex, childTabIndex}
         ) :
         prevBottomScreenHolder;
 
@@ -478,7 +490,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
   }
 
   /** 移動アニメーションなしで現在のスクリーンを破棄し、新しいスクリーンスタックに差し替える */
-  resetWithoutEffect({routeName, params, tabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
+  resetWithoutEffect({routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false}: NamedTransitionScreenParams) {
 
     if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
       return;
@@ -494,7 +506,7 @@ export class Router extends React.Component<RouterProps, RouterState> {
           new Animated.Value(0),
           !_.isNil(params) ? params : {},
           false,
-          tabIndex
+          {tabIndex, childTabIndex}
         );
 
     this.initialScreenHolder = bottomScreenHolder;

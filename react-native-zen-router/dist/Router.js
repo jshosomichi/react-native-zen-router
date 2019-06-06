@@ -9,7 +9,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 /** @ignore */
 export class ScreenHolder {
-    constructor(id, routeName, screenIndex, screen, translateX, translateY, params, stickTab, tabIndex) {
+    constructor(id, routeName, screenIndex, screen, translateX, translateY, params, stickTab, payload) {
         this.id = id;
         this.routeName = routeName;
         this.screenIndex = screenIndex;
@@ -18,7 +18,10 @@ export class ScreenHolder {
         this.translateY = translateY;
         this.params = params;
         this.stickTab = stickTab;
-        this.tabIndex = tabIndex;
+        this.payload = payload;
+    }
+    addParams(key, value) {
+        this.params[key] = value;
     }
 }
 /** @ignore */
@@ -48,7 +51,7 @@ export class Router extends React.Component {
             updateTransitionDuration(props.config.transitionDuration);
         }
         this.initialScreenHolder =
-            new ScreenHolder(Guid.create().toString(), props.config.initialRouteName, 0, routeFromName(props.routes, props.config.initialRouteName).screen, new Animated.Value(0), new Animated.Value(0), {}, false, 0);
+            new ScreenHolder(Guid.create().toString(), props.config.initialRouteName, 0, routeFromName(props.routes, props.config.initialRouteName).screen, new Animated.Value(0), new Animated.Value(0), {}, false, {});
         this.state = {
             transitionState: 'noop',
             routes: props.routes,
@@ -73,13 +76,13 @@ export class Router extends React.Component {
         return this.state.transitionState;
     }
     /** 横移動アニメーションと共にスクリーンを追加表示する。 */
-    pushHorizontal({ routeName, params, tabIndex = 0, allowMultipleTransition = false }) {
+    pushHorizontal({ routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false }) {
         if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
             return;
         }
         const translateX = new Animated.Value(windowWidth);
         const translateY = new Animated.Value(0);
-        const newScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, tabIndex);
+        const newScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, { tabIndex, childTabIndex });
         this.setState({
             screenHolders: this.state.screenHolders.concat([newScreenHolder]),
             transitionState: 'pushing',
@@ -87,13 +90,13 @@ export class Router extends React.Component {
         Animated.timing(translateX, animationConfig(0)).start(() => this.setState({ transitionState: 'noop' }));
     }
     /** 横移動アニメーションと共にスクリーンを追加表示する。 タブはアニメーションせずに先行表示するので、遷移前スクリーンと遷移後スクリーンが同じタブを使っていると、遷移中にタブをスティッキーに見せることができる。 */
-    pushHorizontalWithStickTab({ routeName, params, tabIndex = 0, allowMultipleTransition = false }) {
+    pushHorizontalWithStickTab({ routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false }) {
         if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
             return;
         }
         const translateX = new Animated.Value(windowWidth);
         const translateY = new Animated.Value(0);
-        const newScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, true, tabIndex);
+        const newScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, true, { tabIndex, childTabIndex });
         this.setState({
             screenHolders: this.state.screenHolders.concat([newScreenHolder]),
             transitionState: 'pushing'
@@ -101,13 +104,13 @@ export class Router extends React.Component {
         Animated.timing(translateX, animationConfig(0)).start(() => this.setState({ transitionState: 'noop' }));
     }
     /** 縦移動アニメーションと共にスクリーンを追加表示する。 */
-    pushVertical({ routeName, params, tabIndex = 0, allowMultipleTransition = false }) {
+    pushVertical({ routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false }) {
         if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
             return;
         }
         const translateX = new Animated.Value(0);
         const translateY = new Animated.Value(windowHeight);
-        const newScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, tabIndex);
+        const newScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, { tabIndex, childTabIndex });
         this.setState({
             screenHolders: this.state.screenHolders.concat([newScreenHolder]),
             transitionState: 'pushing'
@@ -115,7 +118,7 @@ export class Router extends React.Component {
         Animated.timing(translateY, animationConfig(0)).start(() => this.setState({ transitionState: 'noop' }));
     }
     /** 横移動アニメーションと共にスクリーンを表示し、それまでのスクリーンスタックを破棄し、新しいスクリーンスタックに差し替える */
-    resetWithPushHorizontal({ routeName, params, tabIndex = 0, allowMultipleTransition = false }) {
+    resetWithPushHorizontal({ routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false }) {
         if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
             return;
         }
@@ -124,13 +127,13 @@ export class Router extends React.Component {
         const translateX = new Animated.Value(windowWidth);
         const translateY = new Animated.Value(0);
         const nextTopScreenHolder = !_.isNil(routeName) ?
-            new ScreenHolder(Guid.create().toString(), routeName, 0, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, tabIndex) :
+            new ScreenHolder(Guid.create().toString(), routeName, 0, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, { tabIndex, childTabIndex }) :
             prevBottomScreenHolder;
         this.initialScreenHolder = nextTopScreenHolder;
         this.setState({ screenHolders: [nextTopScreenHolder, prevTopScreenHolder], transitionState: 'pushing' }, () => Animated.timing(nextTopScreenHolder.translateX, animationConfig(0)).start(() => this.setState({ screenHolders: [nextTopScreenHolder], transitionState: 'noop' })));
     }
     /** 縦移動アニメーションと共にスクリーンを表示し、それまでのスクリーンスタックを破棄し、新しいスクリーンスタックに差し替える */
-    resetWithPushVertical({ routeName, params, tabIndex = 0, allowMultipleTransition = false }) {
+    resetWithPushVertical({ routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false }) {
         if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
             return;
         }
@@ -139,7 +142,7 @@ export class Router extends React.Component {
         const translateX = new Animated.Value(0);
         const translateY = new Animated.Value(windowHeight);
         const nextTopScreenHolder = !_.isNil(routeName) ?
-            new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, tabIndex) :
+            new ScreenHolder(Guid.create().toString(), routeName, this.state.screenHolders.length, routeFromName(this.state.routes, routeName).screen, translateX, translateY, !_.isNil(params) ? params : {}, false, { tabIndex, childTabIndex }) :
             prevBottomScreenHolder;
         this.initialScreenHolder = nextTopScreenHolder;
         this.setState({ screenHolders: [nextTopScreenHolder, prevTopScreenHolder], transitionState: 'pushing' }, () => Animated.timing(nextTopScreenHolder.translateY, animationConfig(0)).start(() => this.setState({ screenHolders: [nextTopScreenHolder], transitionState: 'noop' })));
@@ -151,10 +154,11 @@ export class Router extends React.Component {
             return;
         }
         const tabIndex = !_.isNil(params) && !_.isNil(params.tabIndex) ? params.tabIndex : 0;
+        const childTabIndex = !_.isNil(params) && !_.isNil(params.childTabIndex) ? params.childTabIndex : 0;
         const topScreenHolder = this.state.screenHolders[this.state.screenHolders.length - 1];
         const prevBottomScreenHolder = this.state.screenHolders[0];
         const bottomScreenHolder = !_.isNil(params) && !_.isNil(params.routeName) ?
-            new ScreenHolder(Guid.create().toString(), params.routeName, 0, routeFromName(this.state.routes, params.routeName).screen, new Animated.Value(0), new Animated.Value(0), !_.isNil(params) ? params : {}, false, tabIndex) :
+            new ScreenHolder(Guid.create().toString(), params.routeName, 0, routeFromName(this.state.routes, params.routeName).screen, new Animated.Value(0), new Animated.Value(0), !_.isNil(params) ? params : {}, false, { tabIndex, childTabIndex }) :
             prevBottomScreenHolder;
         this.initialScreenHolder = bottomScreenHolder;
         this.setState({ screenHolders: [bottomScreenHolder, topScreenHolder], transitionState: 'popping' }, () => this.setState({ screenHolders: [bottomScreenHolder, topScreenHolder] }, () => Animated.timing(topScreenHolder.translateX, animationConfig(windowWidth)).start(() => this.setState({ screenHolders: [bottomScreenHolder], transitionState: 'noop' }))));
@@ -166,20 +170,21 @@ export class Router extends React.Component {
             return;
         }
         const tabIndex = !_.isNil(params) && !_.isNil(params.tabIndex) ? params.tabIndex : 0;
+        const childTabIndex = !_.isNil(params) && !_.isNil(params.childTabIndex) ? params.childTabIndex : 0;
         const topScreenHolder = this.state.screenHolders[this.state.screenHolders.length - 1];
         const prevBottomScreenHolder = this.state.screenHolders[0];
         const bottomScreenHolder = !_.isNil(params) && !_.isNil(params.routeName) ?
-            new ScreenHolder(Guid.create().toString(), params.routeName, 0, routeFromName(this.state.routes, params.routeName).screen, new Animated.Value(0), new Animated.Value(0), !_.isNil(params) ? params : {}, false, tabIndex) :
+            new ScreenHolder(Guid.create().toString(), params.routeName, 0, routeFromName(this.state.routes, params.routeName).screen, new Animated.Value(0), new Animated.Value(0), !_.isNil(params) ? params : {}, false, { tabIndex, childTabIndex }) :
             prevBottomScreenHolder;
         this.initialScreenHolder = bottomScreenHolder;
         this.setState({ screenHolders: [bottomScreenHolder, topScreenHolder], transitionState: 'popping' }, () => this.setState({ screenHolders: [bottomScreenHolder, topScreenHolder] }, () => Animated.timing(topScreenHolder.translateY, animationConfig(windowHeight)).start(() => this.setState({ screenHolders: [bottomScreenHolder], transitionState: 'noop' }))));
     }
     /** 移動アニメーションなしで現在のスクリーンを破棄し、新しいスクリーンスタックに差し替える */
-    resetWithoutEffect({ routeName, params, tabIndex = 0, allowMultipleTransition = false }) {
+    resetWithoutEffect({ routeName, params, tabIndex = 0, childTabIndex = 0, allowMultipleTransition = false }) {
         if (!allowMultipleTransition && this.state.transitionState !== 'noop') {
             return;
         }
-        const bottomScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, 0, routeFromName(this.state.routes, routeName).screen, new Animated.Value(0), new Animated.Value(0), !_.isNil(params) ? params : {}, false, tabIndex);
+        const bottomScreenHolder = new ScreenHolder(Guid.create().toString(), routeName, 0, routeFromName(this.state.routes, routeName).screen, new Animated.Value(0), new Animated.Value(0), !_.isNil(params) ? params : {}, false, { tabIndex, childTabIndex });
         this.initialScreenHolder = bottomScreenHolder;
         this.setState({ screenHolders: [bottomScreenHolder], transitionState: 'noop' });
     }

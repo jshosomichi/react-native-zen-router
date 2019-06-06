@@ -27,7 +27,7 @@ export class TopScreen extends React.Component<ContentProps> {
       },
       {
         description: 'Open the tab screen. (header and footer)',
-        callback: () => this.props.router.pushHorizontal({routeName: 'NestedTab'})
+        callback: () => this.props.router.pushHorizontal({routeName: 'NestedTab', tabIndex: 0, childTabIndex: 2})
       },
     ];
 

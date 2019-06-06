@@ -37,8 +37,10 @@ declare module 'react-native-zen-router' {
     readonly translateX: Animated.Value;
     readonly translateY: Animated.Value;
     readonly stickTab?: boolean | undefined;
-
-    constructor(routeName: string, screen: Screen, top: Animated.Value, left: Animated.Value, stickTab?: boolean | undefined);
+    readonly payload: {
+      tabIndex?: number;
+      childTabIndex?: number;
+    };
   }
 
 
@@ -67,6 +69,7 @@ declare module 'react-native-zen-router' {
     routeName: string;
     params?: { [param: string]: any };
     tabIndex?: number;
+    childTabIndex?: number;
     allowMultipleTransition?: boolean;
   }
 
@@ -74,6 +77,7 @@ declare module 'react-native-zen-router' {
     routeName?: string;
     params?: { [param: string]: any };
     tabIndex?: number;
+    childTabIndex?: number;
     allowMultipleTransition?: boolean;
   }
 

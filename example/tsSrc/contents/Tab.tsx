@@ -19,21 +19,21 @@ export class HeaderTab extends React.Component<ContentProps> {
             <Text
               style={{color: tabScreen!.currentIndex() === 0 ? '#55cbe1' : '#4c4c4c'}}
               onPress={() => tabScreen!.switchTab(0)}>
-              {'Content0'}
+              {'Content1'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerTabButton}>
             <Text
               style={{color: tabScreen!.currentIndex() === 1 ? '#55cbe1' : '#4c4c4c'}}
               onPress={() => tabScreen!.switchTab(1)}>
-              {'Content1'}
+              {'Content2'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerTabButton}>
             <Text
               style={{color: tabScreen!.currentIndex() === 2 ? '#55cbe1' : '#4c4c4c'}}
               onPress={() => tabScreen!.switchTab(2)}>
-              {'Content2'}
+              {'Content3'}
             </Text>
           </TouchableOpacity>
         </View>
