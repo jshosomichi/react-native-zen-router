@@ -73,7 +73,7 @@ export class TabScreen extends React.Component {
         if (this.state.tabIndex > contentComponents.length - 1 || this.state.tabIndex < 0) {
             throw new Error(`tabIndex "${this.state.tabIndex}" is out-of-range in TabScreen.`);
         }
-        const footerTabLayout = tabType === 'footer' ? this.state.tabLayout : screenAttributes.tabLayout;
+        const footerTabLayout = tabType === 'footer' ? this.state.tabLayout : screenAttributes.parentTabLayout;
         const negativeMarginBottomOfContent = !_.isNil(this.props.negativeMarginBottomOfContent) ? this.props.negativeMarginBottomOfContent : 0;
         const styles = createStyles(this.state.swipeDirection !== SwipeDirection.NONE, negativeMarginBottomOfContent, footerTabLayout);
         const swipableResponder = this.props.swipable ? Object.assign({}, this.swipableResponder.panHandlers) : {};

@@ -127,7 +127,7 @@ export class TabScreen extends React.Component<TabScreenProps, TabScreenState> {
       throw new Error(`tabIndex "${this.state.tabIndex}" is out-of-range in TabScreen.`);
     }
 
-    const footerTabLayout = tabType === 'footer' ? this.state.tabLayout : screenAttributes.tabLayout;
+    const footerTabLayout = tabType === 'footer' ? this.state.tabLayout : screenAttributes.parentTabLayout;
 
     const negativeMarginBottomOfContent = !_.isNil(this.props.negativeMarginBottomOfContent) ? this.props.negativeMarginBottomOfContent! : 0;
 
