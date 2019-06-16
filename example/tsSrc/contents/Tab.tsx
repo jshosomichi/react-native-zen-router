@@ -73,6 +73,13 @@ export const ContentForTab = (kind: string) => {
             {`Screen ${kind}`}
           </Text>
         </View>
+        <View>
+          <Text
+            style={styles.linkText}
+            onPress={() => this.props.router.pushHorizontalWithStickTab({routeName: 'NestedTab'})}>
+            {`Go to next nested tab screen.`}
+          </Text>
+        </View>
       </View>;
     }
   };
@@ -80,6 +87,7 @@ export const ContentForTab = (kind: string) => {
 
 const styles = StyleSheet.create({
   headerTabContainer: {
+    height: 96,
     backgroundColor: '#fff'
   },
   goBack: {
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     top: 12,
-    height: 60,
+    height: 64,
     width: windowWidth,
     borderBottomWidth: 0.5,
     borderColor: '#808080'
@@ -105,13 +113,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 64,
   },
   headerTabButtonCenter: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 60,
+    height: 64,
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5,
     borderColor: '#808080'
@@ -131,11 +138,17 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    paddingTop: 12,
+    paddingLeft: 12,
   },
   contentText: {
-    textAlign: 'center'
+    fontSize: 20,
+    color: '#4c4c4c',
+  },
+  linkText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: '#4c4c4c',
   }
 });
