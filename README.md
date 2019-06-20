@@ -114,7 +114,7 @@ $ yarn install
 $ cd ../example/
 $ yarn install
 $ cd ..
-$ npm run code-sync
+$ yarn code-sync 
 $ cd example/
 $ react-native run-ios
 ```
