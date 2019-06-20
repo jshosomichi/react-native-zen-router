@@ -1,6 +1,6 @@
 {
   "name": "react-native-zen-router",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Router for React Native with simple concept.",
   "main": "react-native-zen-router.js",
   "dependencies": {
