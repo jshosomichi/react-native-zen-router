@@ -10,7 +10,7 @@
 
 "@types/events@*":
   version "1.2.0"
-  resolved "http://registry.npmjs.org/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
+  resolved "https://registry.npmjs.org/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
 
 "@types/fs-extra@^5.0.3":
   version "5.0.4"
@@ -73,7 +73,7 @@ accepts@^1.3.5, accepts@~1.3.4:
 
 ansi-escape-sequences@^3.0.0:
   version "3.0.0"
-  resolved "http://registry.npmjs.org/ansi-escape-sequences/-/ansi-escape-sequences-3.0.0.tgz#1c18394b6af9b76ff9a63509fa497669fd2ce53e"
+  resolved "https://registry.npmjs.org/ansi-escape-sequences/-/ansi-escape-sequences-3.0.0.tgz#1c18394b6af9b76ff9a63509fa497669fd2ce53e"
   dependencies:
     array-back "^1.0.3"
 
@@ -116,7 +116,7 @@ argv-tools@^0.1.1:
 
 array-back@^1.0.3:
   version "1.0.4"
-  resolved "http://registry.npmjs.org/array-back/-/array-back-1.0.4.tgz#644ba7f095f7ffcf7c43b5f0dc39d3c1f03c063b"
+  resolved "https://registry.npmjs.org/array-back/-/array-back-1.0.4.tgz#644ba7f095f7ffcf7c43b5f0dc39d3c1f03c063b"
   dependencies:
     typical "^2.6.0"
 
@@ -129,12 +129,6 @@ array-back@^2.0.0:
 async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
-
-async@^2.5.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/async/-/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
-  dependencies:
-    lodash "^4.17.10"
 
 babel-code-frame@^6.22.0:
   version "6.26.0"
@@ -150,7 +144,7 @@ balanced-match@^1.0.0:
 
 basic-auth@^1.1.0:
   version "1.1.0"
-  resolved "http://registry.npmjs.org/basic-auth/-/basic-auth-1.1.0.tgz#45221ee429f7ee1e5035be3f51533f1cdfd29884"
+  resolved "https://registry.npmjs.org/basic-auth/-/basic-auth-1.1.0.tgz#45221ee429f7ee1e5035be3f51533f1cdfd29884"
 
 basic-auth@~2.0.0:
   version "2.0.1"
@@ -175,7 +169,7 @@ builtin-modules@^1.1.1:
 
 byte-size@^3.0.0:
   version "3.0.0"
-  resolved "http://registry.npmjs.org/byte-size/-/byte-size-3.0.0.tgz#406f9e2366aa5dabf63672eb291d7bb09495da75"
+  resolved "https://registry.npmjs.org/byte-size/-/byte-size-3.0.0.tgz#406f9e2366aa5dabf63672eb291d7bb09495da75"
 
 byte-size@^4.0.2, byte-size@^4.0.3:
   version "4.0.4"
@@ -281,9 +275,9 @@ commander@^2.12.1:
   version "2.19.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
 
-commander@~2.17.1:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
+commander@~2.20.3:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
 
 common-log-format@~0.1.3:
   version "0.1.4"
@@ -443,10 +437,10 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
 
 handlebars@^4.0.6:
-  version "4.0.12"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.0.12.tgz#2c15c8a96d46da5e266700518ba8cb8d919d5bc5"
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
   dependencies:
-    async "^2.5.0"
+    neo-async "^2.6.0"
     optimist "^0.6.1"
     source-map "^0.6.1"
   optionalDependencies:
@@ -475,7 +469,7 @@ http-assert@^1.3.0:
 
 http-errors@1.6.3, http-errors@~1.6.2:
   version "1.6.3"
-  resolved "http://registry.npmjs.org/http-errors/-/http-errors-1.6.3.tgz#8b55680bb4be283a0b5bf4ea2e38580be1d9320d"
+  resolved "https://registry.npmjs.org/http-errors/-/http-errors-1.6.3.tgz#8b55680bb4be283a0b5bf4ea2e38580be1d9320d"
   dependencies:
     depd "~1.1.2"
     inherits "2.0.3"
@@ -653,7 +647,7 @@ koa-route@^3.2.0:
 
 koa-send@^4.1.3:
   version "4.1.3"
-  resolved "http://registry.npmjs.org/koa-send/-/koa-send-4.1.3.tgz#0822207bbf5253a414c8f1765ebc29fa41353cb6"
+  resolved "https://registry.npmjs.org/koa-send/-/koa-send-4.1.3.tgz#0822207bbf5253a414c8f1765ebc29fa41353cb6"
   dependencies:
     debug "^2.6.3"
     http-errors "^1.6.1"
@@ -882,7 +876,7 @@ marked@^0.4.0:
 
 media-typer@0.3.0:
   version "0.3.0"
-  resolved "http://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
+  resolved "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
 methods@~1.1.0:
   version "1.1.2"
@@ -906,7 +900,7 @@ minimatch@^3.0.0, minimatch@^3.0.4:
 
 minimist@~0.0.1:
   version "0.0.10"
-  resolved "http://registry.npmjs.org/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
 morgan@^1.6.1:
   version "1.9.1"
@@ -937,6 +931,10 @@ mz@^2.1.0, mz@^2.6.0:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+neo-async@^2.6.0:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
 
 node-version-matches@^1.0.0:
   version "1.0.1"
@@ -991,7 +989,7 @@ parseurl@^1.3.2, parseurl@~1.3.2:
 
 path-is-absolute@1.0.1, path-is-absolute@^1.0.0:
   version "1.0.1"
-  resolved "http://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
+  resolved "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
 
 path-parse@^1.0.6:
   version "1.0.6"
@@ -1030,7 +1028,7 @@ raw-body@^2.3.3:
 
 readable-stream@2:
   version "2.3.6"
-  resolved "http://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
+  resolved "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.3"
@@ -1158,7 +1156,7 @@ streaming-json-stringify@3:
 
 string_decoder@~1.1.1:
   version "1.1.1"
-  resolved "http://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
+  resolved "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
   dependencies:
     safe-buffer "~5.1.0"
 
@@ -1209,7 +1207,7 @@ thenify-all@^1.0.0:
 
 "through@>=2.2.7 <3":
   version "2.3.8"
-  resolved "http://registry.npmjs.org/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
+  resolved "https://registry.npmjs.org/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
 toidentifier@1.0.0:
   version "1.0.0"
@@ -1288,10 +1286,10 @@ typical@^3.0.0:
   resolved "https://registry.yarnpkg.com/typical/-/typical-3.0.0.tgz#90ff7c207fabf8b63258b76efdade39cfc9ff36f"
 
 uglify-js@^3.1.4:
-  version "3.4.9"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.4.9.tgz#af02f180c1207d76432e473ed24a28f4a782bae3"
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.7.3.tgz#f918fce9182f466d5140f24bb0ff35c2d32dcc6a"
   dependencies:
-    commander "~2.17.1"
+    commander "~2.20.3"
     source-map "~0.6.1"
 
 universalify@^0.1.0:
